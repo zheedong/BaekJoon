@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#pragma warning(disable:4996)
 
 struct node {
 	int data;
@@ -26,6 +29,10 @@ int pop(StackNode **topPtr) {
 	StackNode *tempPtr;
 	int popValue;
 
+	if (*topPtr == NULL) {
+		return -1;
+	}
+
 	tempPtr = *topPtr;
 	popValue = (*topPtr)->data;
 	*topPtr = (*topPtr)->nextPtr;
@@ -36,6 +43,10 @@ int pop(StackNode **topPtr) {
 
 int size(StackNode **topPtr) {
 	int count = 0;
+	if (topPtr == NULL) {
+		printf("ERROR\n");
+		exit(1);
+	}
 	StackNode *tempPtr = *topPtr;
 	while (tempPtr != NULL) {
 		count++;
@@ -46,7 +57,7 @@ int size(StackNode **topPtr) {
 }
 
 int empty(StackNode **topPtr) {
-	if ((*topPtr)->data == NULL) {
+	if (*topPtr == NULL) {
 		return 1;
 	}
 	else {
@@ -65,5 +76,37 @@ int top(StackNode **topPtr) {
 }
 
 int main() {
-	int 
+	int how_many = 0;
+	char buffer[15];
+	char Push[5] = "push";
+	char Pop[4] = "pop";
+	char Size[5] = "size";
+	char Empty[6] = "empty";
+	char Top[4] = "top";
+
+	StackNode *StackPtr = NULL;
+	
+	scanf("%d", &how_many);
+	getchar();
+	for (int i = 0; i < how_many; i++) {
+		gets(buffer);
+		if (strcmp(buffer, Size) == 0) {
+			printf("%d\n", size(&StackPtr));
+		}
+		else if (strcmp(buffer, Empty) == 0) {
+			printf("%d\n", empty(&StackPtr));
+		}
+		else if (strcmp(buffer, Top) == 0) {
+			printf("%d\n", top(&StackPtr));
+		}
+		else if (strcmp(buffer, Pop) == 0) {
+			printf("%d\n", pop(&StackPtr));
+		}
+		else {
+			char *ptr = strtok(buffer, " ");
+			ptr = strtok(NULL, " ");
+			push(&StackPtr, atoi(ptr));
+		}
+	}
+	return 0;
 }
