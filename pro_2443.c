@@ -1,0 +1,17 @@
+#include <stdio.h>
+#pragma warning (disable:4996)
+
+int main() {
+	int row = 0;
+	scanf("%d", &row);
+
+	for (int i = row; i >= 0; i--) {
+		for (int j = 1; j <= row - i; j++)
+			printf(" ");
+		for (int p = 1; p <= 2 * i - 1; p++)
+			printf("*");
+		printf("\n");
+	}
+
+	return 0;
+}
