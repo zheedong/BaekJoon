@@ -397,6 +397,12 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+# My personal setting
+.vcxproj
+.filters
+.user
+.Ink
+
 # BeatPulse healthcheck temp database
 healthchecksdb
 
