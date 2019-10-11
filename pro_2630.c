@@ -2,52 +2,85 @@
 #include <stdlib.h>
 #include <string.h>
 #pragma warning (disable:4996)
+#define WHITE 0
+#define BLUE 1
 
-struct node {
-	int* matrixPtr;
-	struct node *Ptr1;
-	struct node *Ptr2;
-	struct node *Ptr3;
-	struct node *Ptr4;
-};
+typedef int COLOR;
+int WHITE_COUNTER = 0;
+int BLUE_COUNTER = 0;
 
-void mk_matrix(int sizeN, int **arr) {
-	arr = (int**)malloc(sizeof(int*) * sizeN);
-	for (int i = 0; i < sizeN; i++) {
-		*(arr + sizeof(int) * i) = (int*)malloc(sizeof(int) * sizeN);
+int** Make_Matrix(int size) {
+	int** new_Matrix;
+	new_Matrix = (int**)malloc(sizeof(int*) * size);
+	for (int Col = 0; Col < size; Col++) {
+		new_Matrix[Col] = (int*)malloc(sizeof(int) * size);
 	}
+	return new_Matrix;
 }
 
-void rm_matrix(int sizeN, int** arr) {
-	for (int i = 0; i < sizeN; i++) {
-		free(arr[i]);
+void free_matrix(int** ppArr, int size) {
+	for (int i = 0; i < size; i++) {
+		free(ppArr[i]);
 	}
-	free(arr);
+	free(ppArr);
+}
+void checker(int N_N, int** ppArr) {
+	COLOR initial = ppArr[0][0];
+	for (int Row = 0; Row < N_N; Row++) {
+		for (int Col = 0; Col < N_N; Col++) {
+			if (ppArr[Row][Col] != initial) {
+				int** ppMatrix1 = Make_Matrix(N_N / 2);
+				for (int i = 0; i < N_N / 2; i++) {
+					for (int j = 0; j < N_N / 2; j++) {
+						ppMatrix1[i][j] = ppArr[i][j];
+					}
+				}
+				int** ppMatrix2 = Make_Matrix(N_N / 2);
+				for (int i = 0; i < N_N / 2; i++) {
+					for (int j = N_N / 2; j < N_N; j++) {
+						ppMatrix2[i][j - N_N / 2] = ppArr[i][j];
+					}
+				}
+				int** ppMatrix3 = Make_Matrix(N_N / 2);
+				for (int i = N_N / 2; i < N_N; i++) {
+					for (int j = 0; j < N_N / 2; j++) {
+						ppMatrix3[i - N_N / 2][j] = ppArr[i][j];
+					}
+				}
+				int** ppMatrix4 = Make_Matrix(N_N / 2);
+				for (int i = N_N / 2; i < N_N; i++) {
+					for (int j = N_N / 2; j < N_N; j++) {
+						ppMatrix4[i - N_N / 2][j - N_N / 2] = ppArr[i][j];
+					}
+				}
+				checker(N_N/2,ppMatrix1);
+				checker(N_N/2,ppMatrix2);
+				checker(N_N/2,ppMatrix3);
+				checker(N_N/2,ppMatrix4);
+				return;
+			}
+		}
+	}
+	free_matrix(ppArr, N_N);
+	if (initial == WHITE)
+		WHITE_COUNTER++;
+	else
+		BLUE_COUNTER++;
 }
 
 int main() {
-	int sizeN;
-	scanf("%d", &sizeN);
-
-	int** matrix1; //2차원 배열을 동적 할당
-	mk_matrix(sizeN, matrix1);
-
-	for (int row = 0; row < sizeN; row++) {
-		for (int col = 0; col < sizeN; col++) {
-			int w;
-			scanf("%d", &w);
-			matrix1[row][col] = w;
+	int size = 0;
+	scanf("%d", &size);
+	int** ppArr = Make_Matrix(size);
+	for (int Row = 0; Row < size; Row++) {
+		for (int Col = 0; Col < size; Col++) {
+			int buffer = 0;
+			scanf("%d", &buffer);
+			ppArr[Row][Col] = buffer;
 		}
 	}
-//밑에는 Test
-	for (int row = 0; row < sizeN; row++) {
-		for (int col = 0; col < sizeN; col++) {
-			printf("%d ", matrix1[row][col]);
-		}
-		printf("\n");
-	}
-//Test 끝
-
-	rm_matrix(sizeN, matrix1);
+	checker(size, ppArr);
+	printf("%d\n%d", WHITE_COUNTER, BLUE_COUNTER);
+	free_matrix(ppArr, size);
 	return 0;
 }
