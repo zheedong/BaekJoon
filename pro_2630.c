@@ -24,6 +24,7 @@ void free_matrix(int** ppArr, int size) {
 	}
 	free(ppArr);
 }
+
 void checker(int N_N, int** ppArr) {
 	COLOR initial = ppArr[0][0];
 	for (int Row = 0; Row < N_N; Row++) {
@@ -53,14 +54,16 @@ void checker(int N_N, int** ppArr) {
 						ppMatrix4[i - N_N / 2][j - N_N / 2] = ppArr[i][j];
 					}
 				}
-				checker(N_N/2,ppMatrix1);
-				checker(N_N/2,ppMatrix2);
-				checker(N_N/2,ppMatrix3);
-				checker(N_N/2,ppMatrix4);
+
+				checker(N_N / 2, ppMatrix1);
+				checker(N_N / 2, ppMatrix2);
+				checker(N_N / 2, ppMatrix3);
+				checker(N_N / 2, ppMatrix4);
 				return;
 			}
 		}
 	}
+
 	free_matrix(ppArr, N_N);
 	if (initial == WHITE)
 		WHITE_COUNTER++;
@@ -72,6 +75,7 @@ int main() {
 	int size = 0;
 	scanf("%d", &size);
 	int** ppArr = Make_Matrix(size);
+
 	for (int Row = 0; Row < size; Row++) {
 		for (int Col = 0; Col < size; Col++) {
 			int buffer = 0;
@@ -79,6 +83,7 @@ int main() {
 			ppArr[Row][Col] = buffer;
 		}
 	}
+
 	checker(size, ppArr);
 	printf("%d\n%d", WHITE_COUNTER, BLUE_COUNTER);
 	free_matrix(ppArr, size);

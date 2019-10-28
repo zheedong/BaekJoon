@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#pragma warning(disable:4996)
+
+//n,k - Josephus permutation
 
 struct Node {
 	int data;
 	struct Node *nextPtr;
 };
 
-typedef struct Node QueueNode; 
+typedef struct Node QueueNode;
 
 void enqueue(QueueNode **headPPtr, QueueNode **tailPPtr, int value) {
 	QueueNode *newPtr;
@@ -50,9 +53,40 @@ int dequeue(QueueNode **headPPtr, QueueNode **tailPPtr) {
 	return value;
 }
 
+int empty(QueueNode **headPPtr, QueueNode **tailPPtr) {
+	if (*headPPtr == NULL) {
+		return 1;
+	}
+	else {
+		return 0;
+	} //simple!
+}
+
 int main() {
-	int N, K;
+	QueueNode *headPtr = NULL;
+	QueueNode *tailPtr = NULL;
+	int N, K, count = 0;
 	scanf("%d %d", &N, &K);
 
-	printf("< ");
-	
+	int *arr = (int *)malloc(sizeof(int)*N); //Make an array space
+
+	for (int i = 1; i <= N; i++) {
+		enqueue(&headPtr, &tailPtr, i); //enqueue N numbers
+	}
+
+	while (empty(&headPtr, &tailPtr) == 0) {
+		for (int l = 0; l < K - 1; l++)
+			enqueue(&headPtr, &tailPtr, dequeue(&headPtr, &tailPtr)); //Pop from head, Push to tail
+		*(arr + count) = dequeue(&headPtr, &tailPtr); //Pop from head, and save it in array
+		count++;
+	}
+
+	printf("<");
+	for (int j = 0; j < count - 1; j++) {
+		printf("%d, ", *(arr + j)); //print N - 1 numbers
+	}
+	printf("%d>\n", *(arr + count - 1)); //print LAST number
+
+	free(arr); //free malloc
+	return 0;
+}
