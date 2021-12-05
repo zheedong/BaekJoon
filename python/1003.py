@@ -1,20 +1,27 @@
-class countCall:
-    count_zero = 0
-    count_one = 0
+fib_dict = {0:(1,0), 1:(0,1)}
+# n : (0, 1)
+# Dynamic Programming!
 
-def get_nth_fibonacci_number(countCall, n):
-    if n == 0:
-        countCall.count_zero += 1
-        return 0
-    elif n == 1:
-        countCall.count_one += 1
-        return 1
+n = int(input())
+
+def add_two_tup(tup1, tup2):
+    a, b = tup1
+    c, d = tup2
+    return (a+c, b+d)
+
+def get_fib_count(k):
+    if k in fib_dict:
+        return fib_dict[k]
     else:
-        return get_nth_fibonacci_number(countCall, n - 1) + get_nth_fibonacci_number(countCall, n - 2)
+        add_tup_result = add_two_tup(get_fib_count(k-2), get_fib_count(k-1))
+        fib_dict[k] = add_tup_result
+        return add_tup_result
 
-index = int(input())
+inp_list = []
 
-for i in range(0, index):
-    count = countCall()
-    get_nth_fibonacci_number(count, int(input()))
-    print(str(count.count_zero) + " " + str(count.count_one))
+for i in range(0, n):
+    inp_list.append(int(input()))
+    
+for i in range(0, n):
+    a, b = map(str, get_fib_count(inp_list[i]))
+    print(a + " " + b)
