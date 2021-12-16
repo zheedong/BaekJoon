@@ -4,36 +4,21 @@ conf_set = []
 
 for _ in range(n):
     conf_set.append(tuple(map(int, input().split())))
-conf_set.sort()
+conf_set.sort(key=lambda x : (x[1], x[0]))
+# 끝나는 시간을 기준으로 정렬
+# 시작과 종료가 같은 경우를 포함하기 위해선, 시작 시간도 오름차순으로 정렬해 줘야 한다
 
-dp_dict = dict([])
-    
-def maximum_conf(lst, start_point):
-    if len(lst[start_point:]) == 0:
-        return 0
-    elif len(lst[start_point:]) == 1:
-        return 1
-    else:
-        if start_point in dp_dict:
-            return dp_dict[start_point]
-        else:
-            start_time, end_time = lst[start_point]
-            for i in range(start_point, len(lst)):
-                next_start, _ = lst[i]
-                if next_start >= end_time:
-                    break
-            ret = 1 + maximum_conf(lst, i)
-            dp_dict[start_point] = ret
-            return ret
-              
-ret = 0
+solution_list = [conf_set[0]]
 
-for i in range(0, len(conf_set)):
-    start, end = conf_set[i]
-    for j in range(start, end):
-        if j in map(lambda x : x[0] , conf_set):
-            buf = maximum_conf(conf_set, j)
-            if buf > ret:
-                ret = buf
+# Greedy Algorithm
+
+for conf in conf_set[1:]:
+    last_conf = solution_list[-1]
+    _, last_end_time = last_conf
+    new_start_time, _ = conf
     
-print(ret)
+    # 정렬된 회의의 list의 마지막 값의 시작 시간과, 정답 list 마지막의 종료 시간을 비교한다
+    if new_start_time >= last_end_time:
+        solution_list.append(conf)
+
+print(len(solution_list))
