@@ -1,3 +1,4 @@
+# 참고 : https://sweetdev.tistory.com/807
 a, b, c = map(int, input().split())
 
 # b를 2진수로 변환, 앞에 1b는 떼고 str로 저장
