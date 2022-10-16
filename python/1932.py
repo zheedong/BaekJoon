@@ -21,7 +21,7 @@ def div_2_triangle(triangle):
         tri2.append(row[1:])
     return tri1, tri2
 
-# ---- 안 쓰는 코드 시작 ----
+# ---- Top - down approach ----
 # Naive recursion. TOO SLOW
 def naive_rec(triangle):
     triangle_top = triangle[0][0]
@@ -57,8 +57,8 @@ def dp_solution(triangle):
 
 # DP로 풀면 풀릴 줄 알았는데... 메모리 초과가 나옴. 그래서 다른 접근 시도. DP 문제 맞긴 한데...
 # 삼각형을 dict에 저장하는 방식에서 문제가 생기나? 했는데 naive recursion도 안 됨. div_2_triangle에 문제가 있나?
-# ---- 안 쓰는 코드 끝 ----
 
+# ---- Bottom - up approach ----
 def triangle_shrink(triangle):
     triangle_size = len(triangle)
     # Base Case. 크기 1인 삼각형은 그냥 값만 리턴.
