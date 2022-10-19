@@ -34,8 +34,8 @@ def get_sum_list(arr):
     sum_list = [[sum(arr[row][:col + 1]) for col in range(n)] for row in range(n)]
 
     # row의 합을 위에서부터 합해주기
-    for i in range(len(sum_list) - 1):
-        for j in range(len(sum_list[0])):
+    for i in range(n - 1):
+        for j in range(n):
             sum_list[i + 1][j] += sum_list[i][j]
     return sum_list
 
