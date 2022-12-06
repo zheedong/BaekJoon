@@ -17,4 +17,5 @@ for _ in range(n):
         except IndexError:
             print(0)
     else:
+        # 절댓값 힙. tuple의 [0], [1] 순으로 우선순위가 정해진다.
         heapq.heappush(abs_heap, (abs(x), x))
