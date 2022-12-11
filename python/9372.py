@@ -19,15 +19,19 @@ def bfs(root, adj_mat, n):
     return airline_cnt
 
 t = int(input().rstrip())
-
 for _ in range(t):
     n, m = map(int, input().split())
     adj_mat = [[None] for _ in range(n + 1)]
-
     for _ in range(m):
         a, b = map(int, input().split())
         adj_mat[a].append(b)
         adj_mat[b].append(a)
-    # [[None], [None, 2, 3], [None, 1, 3], [None, 2, 1]]
-
     print(bfs(1, adj_mat, n))
+
+# True Solution
+t = int(input())
+for _ in range(t):
+    n, m = map(int, input().split())
+    for _ in range(m):
+        input()
+    print(n - 1)
