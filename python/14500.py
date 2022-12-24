@@ -28,6 +28,7 @@ tetris=[[(0,0),(0,1),(0,2),(0,3)],
 
 max_sum = -1
 
+# O(4 * 19 * NM)
 for i in range(n):
     for j in range(m):
         for shape in tetris:
