@@ -7,7 +7,7 @@ stack = deque([])
 for cur_str in mid_fix:
     if cur_str == '(':
         stack.append(cur_str)
-    elif cur_str ==')':
+    elif cur_str == ')':
         while stack and stack[-1] != '(':
             post_fix.append(stack.pop())
         stack.pop()
