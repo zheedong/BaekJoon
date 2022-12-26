@@ -1,10 +1,12 @@
-# Similar to 1967 
+# Similar to 1967
 from collections import deque
 import sys
 input = sys.stdin.readline
 
+
 def divide_tuple_list(n, lst):
-    return list(map(lambda x : x[n], lst))
+    return list(map(lambda x: x[n], lst))
+
 
 # You don't need to worry about duplicated input.
 def get_input():
@@ -23,6 +25,7 @@ def get_input():
 
     return adj_list
 
+
 def dfs(root, adj_list):
     # Time Complexity issue. Search in Set is O(1), but in List is O(n)
     visitied = set([])
@@ -40,9 +43,11 @@ def dfs(root, adj_list):
 
             for next in adj_list[cur_node][1:]:
                 next_node, next_edge = next
-                search_stack.append((next_node, next_edge + cur_accumulative_sum))
+                search_stack.append(
+                    (next_node, next_edge + cur_accumulative_sum))
 
-    return max(ret, key=lambda x:x[1])
+    return max(ret, key=lambda x: x[1])
+
 
 # Conduct DFS two times.
 def sol(adj_list):
@@ -50,5 +55,6 @@ def sol(adj_list):
     leaf_node, _ = dfs(root, adj_list)
     _, dist_from_leaf = dfs(leaf_node, adj_list)
     return dist_from_leaf
+
 
 print(sol(get_input()))
