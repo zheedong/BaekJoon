@@ -9,11 +9,10 @@ def is_prime(x):
             return False
     return True
 
+
 for prime in range(2, n + 1):
     if is_prime(prime):
         prime_list.append(prime)
-
-print(prime_list)
 
 for idx, prime in enumerate(prime_list):
     if prime >= m:
@@ -22,7 +21,6 @@ for idx, prime in enumerate(prime_list):
 else:
     prime_list = []
 
-print(prime_list)
 
 if not prime_list:
     print(-1)
