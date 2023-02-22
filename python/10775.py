@@ -1,31 +1,27 @@
+# Fucking Union-Find. Can not understand!!
 import sys
 input = sys.stdin.readline
 
 G = int(input())
 P = int(input())
 
-gates = [None for _ in range(G)]
-max_plane = -int(1e9)
+parent = [i for i in range(G + 1)]
+planes = [int(input().rstrip()) for _ in range(P)]
+answer = 0
 
-def sol(plane_idx):
-    global max_plane
-    if plane_idx > G - 1:
-        max_plane = max(max_plane, G - gates.count(None))
-        return
-    g_i = g_i_lst[plane_idx]
-    for idx, val in enumerate(gates[:g_i + 1]):
-        if val == None:
-            gates[idx] = plane_idx 
-            sol(plane_idx + 1)
-            gates[idx] = None
+def find(x):
+    if parent[x] == x:
+        return x
     else:
-        max_plane = max(max_plane, G - gates.count(None))
-        return
+        parent[x] = find(parent[x])
+        return parent[x]
 
-g_i_lst = []
+for plane in planes:
+    docking = find(plane)
+    if docking == 0:
+        break
+    else:
+        parent[docking] = parent[docking - 1]
+        answer += 1
 
-for _ in range(P):
-    g_i_lst.append(int(input()) - 1)
-
-sol(0)
-print(max_plane)
+print(answer)
